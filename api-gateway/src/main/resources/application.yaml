@@ -22,6 +22,43 @@ springdoc:
   api-docs:
     enabled: true
     path: /api-docs
+# Actuator Endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+#Resilinece4j Properties
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+        waitDurationInOpenState: 5s
+#Resilience4J Timeout Properties
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 3s
+  #Resilience4J Retry Properties
+  retry:
+    configs:
+      default:
+        max-attempts: 3
+        wait-duration: 2s
+
 #logging:
 #  level:
 #    org.springframework.security: DEBUG
